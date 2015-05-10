@@ -55,7 +55,7 @@ void FrequencyQueue_insert(FrequencyQueue *frequencyQueue, HuffmanNode *huffmanN
 	} else {
 		HuffmanNode *current = frequencyQueue->first;
 
-		while((current->nextHuffmanNode != NULL) && (frequency < current->frequency)) {
+		while((current->nextHuffmanNode != NULL) && (current->nextHuffmanNode->frequency < frequency)) {
 			current = current->nextHuffmanNode;
 		}
 
