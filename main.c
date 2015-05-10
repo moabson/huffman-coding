@@ -28,20 +28,5 @@ int main(int argc, char *argv[]) {
 		// usage
 	}
 
-	/*
-
-	char string[] = "this is an example of a huffman tree";
-
-	FrequencyQueue *frequencyQueue = FrequencyQueue_create(string);
-	FrequencyQueue_print(frequencyQueue);
-
-	HuffmanTree *huffmanTree = HuffmanTree_build(frequencyQueue);
-
-	LOG_INFO("priting root of HuffmanTree")
-
-	printf("~ [%c:%d]\n", huffmanTree->root->character, huffmanTree->root->frequency);
-
-	*/
-
 	return 0;
 }

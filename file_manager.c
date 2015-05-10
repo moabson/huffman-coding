@@ -22,9 +22,7 @@ void compressFile(char *filePath) {
 
 		printf("~ [%c:%d]\n", huffmanTree->root->character, huffmanTree->root->frequency);
 
-
 		// criar arquivo de saida
-
 	}
 
 	fclose(file);
