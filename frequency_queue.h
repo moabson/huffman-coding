@@ -21,7 +21,7 @@ struct frequencyQueue {
 
 FrequencyQueue* FrequencyQueue_createEmpty();
 
-FrequencyQueue* FrequencyQueue_create(char *str);
+FrequencyQueue* FrequencyQueue_create(FILE *file);
 
 int FrequencyQueue_isEmpty(FrequencyQueue *frequencyQueue);
 

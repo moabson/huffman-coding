@@ -16,7 +16,7 @@ FrequencyQueue* FrequencyQueue_createEmpty() {
 	return frequencyQueue;
 }
 
-FrequencyQueue* FrequencyQueue_create(char *str) {
+FrequencyQueue* FrequencyQueue_create(FILE *file) {
 	FrequencyQueue *frequencyQueue = FrequencyQueue_createEmpty();
 
 	int freq[MAX] = {0};
@@ -25,9 +25,7 @@ FrequencyQueue* FrequencyQueue_create(char *str) {
 
 	LOG_INFO("loading FrequencyQueue")
 
-	for(i = 0; i < strlen(str); i++) {
-		character = str[i];
-
+	while((character = fgetc(file)) != 255) {
 		freq[(int) character]++;
 	}
 
@@ -91,7 +89,7 @@ void FrequencyQueue_print(FrequencyQueue *frequencyQueue) {
 		printf("~ ");
 
 		while(current != NULL) {
-			printf("[%c:%d] -> ", current->character, current->frequency);
+			printf("[%d:%d] -> ", current->character, current->frequency);
 
 			current = current->nextHuffmanNode;
 		}
