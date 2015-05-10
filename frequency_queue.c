@@ -23,6 +23,8 @@ FrequencyQueue* FrequencyQueue_create(char *str) {
 	unsigned char character;
 	int i;
 
+	LOG_INFO("loading FrequencyQueue")
+
 	for(i = 0; i < strlen(str); i++) {
 		character = str[i];
 
@@ -74,15 +76,19 @@ HuffmanNode* FrequencyQueue_get(FrequencyQueue *frequencyQueue) {
 
 		return huffmanNode;
 	} else {
+		LOG_WARN("FrequencyQueue_get: FrequencyList is empty")
+
 		return NULL;
 	}
 }
 
 void FrequencyQueue_print(FrequencyQueue *frequencyQueue) {
-	printf("[*] priting FrequencyQueue\n");
-
 	if(!FrequencyQueue_isEmpty(frequencyQueue)) {
+		LOG_INFO("priting FrequencyQueue")
+
 		HuffmanNode *current = frequencyQueue->first;
+
+		printf("~ ");
 
 		while(current != NULL) {
 			printf("[%c:%d] -> ", current->character, current->frequency);
@@ -91,6 +97,7 @@ void FrequencyQueue_print(FrequencyQueue *frequencyQueue) {
 		}
 
 		printf("\n");
-
+	} else {
+		LOG_WARN("priting FrequencyQueue: FrequencyQueue is empty!")
 	}
 }

@@ -28,7 +28,6 @@ HuffmanNode* HuffmanNode_createNode(char character, int frequency, HuffmanNode *
 	return huffmanNode;
 }
 
-
 HuffmanNode* HuffmanNode_createLeaf(char character, int frequency) {
 	HuffmanNode *leafHuffmanNode = HuffmanNode_createEmpty();
 

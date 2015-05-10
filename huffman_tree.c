@@ -19,6 +19,8 @@ HuffmanTree* HuffmanTree_build(FrequencyQueue *frequencyQueue) {
 	HuffmanTree *huffmanTree = HuffmanTree_createEmpty();
 
 	if(!FrequencyQueue_isEmpty(frequencyQueue)) {
+		LOG_INFO("building HuffmanTree");
+
 		while(frequencyQueue->length > 1) {
 			HuffmanNode *left = FrequencyQueue_get(frequencyQueue);
 			HuffmanNode *right = FrequencyQueue_get(frequencyQueue);
@@ -28,9 +30,16 @@ HuffmanTree* HuffmanTree_build(FrequencyQueue *frequencyQueue) {
 			FrequencyQueue_insert(frequencyQueue, newHuffmanNode, newHuffmanNode->frequency);
 		}
 
-		huffmanTree->root = FrequencyQueue_get(frequencyQueue);
+		if((frequencyQueue->length == 1) && (frequencyQueue->first != NULL)) {
+			huffmanTree->root = FrequencyQueue_get(frequencyQueue);
+
+			LOG_INFO("HuffmanTree successfully created")
+		} else {
+			LOG_ERR("failed in building the HuffmanTree: FrequencyQueue length")
+		}
+	} else {
+		LOG_ERR("failed in building the HuffmanTree: FrequencyQueue is empty")
 	}
 
 	return huffmanTree;
 }
-

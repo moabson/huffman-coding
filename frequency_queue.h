@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "huffman_node.h"
+#include "debug.h"
 
 typedef struct frequencyQueue FrequencyQueue;
 
@@ -29,6 +30,5 @@ void FrequencyQueue_insert(FrequencyQueue *frequencyQueue, HuffmanNode *huffmanN
 HuffmanNode* FrequencyQueue_get(FrequencyQueue *frequencyQueue);
 
 void FrequencyQueue_print(FrequencyQueue *frequencyQueue);
-
 
 #endif /* FREQUENCY_QUEUE_H_ */
