@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "huffman_node.h"
 
 typedef struct frequencyQueue FrequencyQueue;
@@ -17,7 +18,9 @@ struct frequencyQueue {
 	int length;
 };
 
-FrequencyQueue* FrequencyQueue_create();
+FrequencyQueue* FrequencyQueue_createEmpty();
+
+FrequencyQueue* FrequencyQueue_create(char *str);
 
 int FrequencyQueue_isEmpty(FrequencyQueue *frequencyQueue);
 

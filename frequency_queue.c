@@ -5,11 +5,39 @@
 
 #include "frequency_queue.h"
 
-FrequencyQueue* FrequencyQueue_create() {
+#define MAX 256
+
+FrequencyQueue* FrequencyQueue_createEmpty() {
 	FrequencyQueue *frequencyQueue = (FrequencyQueue *) malloc(sizeof(FrequencyQueue));
 
 	frequencyQueue->first = NULL;
 	frequencyQueue->length = 0;
+
+	return frequencyQueue;
+}
+
+FrequencyQueue* FrequencyQueue_create(char *str) {
+	FrequencyQueue *frequencyQueue = FrequencyQueue_createEmpty();
+
+	int freq[MAX] = {0};
+	unsigned char character;
+	int i;
+
+	for(i = 0; i < strlen(str); i++) {
+		character = str[i];
+
+		freq[(int) character]++;
+	}
+
+	for(i = 0; i < MAX; i++) {
+		if(freq[i] > 0) {
+			character = (char) i;
+
+			HuffmanNode *newHuffmanNode = HuffmanNode_createLeaf(character, freq[character]);
+
+			FrequencyQueue_insert(frequencyQueue, newHuffmanNode, newHuffmanNode->frequency);
+		}
+	}
 
 	return frequencyQueue;
 }
