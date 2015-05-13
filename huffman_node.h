@@ -12,7 +12,7 @@
 typedef struct huffmanNode HuffmanNode;
 
 struct huffmanNode {
-	char character;
+	unsigned char character;
 	int frequency;
 
 	struct huffmanNode *nextHuffmanNode;
