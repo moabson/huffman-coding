@@ -11,12 +11,19 @@
 #include "frequency_queue.h"
 #include "huffman_node.h"
 #include "debug.h"
+#include "linked_list.h"
+
 
 typedef struct huffmanTree HuffmanTree;
 
 struct huffmanTree {
 	HuffmanNode *root;
+	char * table[256];
 };
+
+void Catch_code(HuffmanTree* tree, HuffmanNode * root, List * list, int size_list);
+
+void print_table(HuffmanTree* tree);
 
 HuffmanTree* HuffmanTree_createEmpty();
 
