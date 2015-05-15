@@ -1,27 +1,35 @@
 /*
  * linked_list.h
  *
- *  Created on: 14/05/2015
- *      Author: eduardo
  */
 
 #ifndef LINKED_LIST_H_
 #define LINKED_LIST_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct node Node;
 
-typedef struct list List;
+typedef struct linkedList LinkedList;
 
-struct list {
+struct node {
 	char bit;
-	struct list * next;
+
+	struct node *nextNode;
 };
 
-List * insert(List * list, char bit);
+struct linkedList {
+	Node *first;
+	int length;
+};
 
-List * delete(List * first);
+LinkedList* LinkedList_createEmpty();
 
-void print(List * list);
+void LinkedList_insert(LinkedList *linkedList, char bit);
+
+void LinkedList_deleteFirst(LinkedList *linkedList);
+
+void LinkedList_print(LinkedList *linkedList);
 
 #endif /* LINKED_LIST_H_ */

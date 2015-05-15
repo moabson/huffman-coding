@@ -1,37 +1,48 @@
 /*
  * linked_list.c
  *
- *  Created on: 14/05/2015
- *      Author: eduardo
  */
 
 #include "linked_list.h"
 
-List * insert(List * first, char bit) {
-	List * list = (List*) malloc(sizeof(List));
+LinkedList* LinkedList_createEmpty() {
+	LinkedList *linkedList = (LinkedList *) malloc(sizeof(LinkedList));
 
-	list->bit = bit;
-	list->next = first;
+	linkedList->first = NULL;
+	linkedList->length = 0;
 
-	return list;
-
+	return linkedList;
 }
 
-List * delete(List * first) {
-	List * aux = first;
+void LinkedList_insert(LinkedList *linkedList, char bit) {
+	Node *newNode = (Node *) malloc(sizeof(Node));
 
-	first = first->next;
+	newNode->bit = bit;
+
+	newNode->nextNode = linkedList->first;
+	linkedList->first = newNode;
+
+	linkedList->length++;
+}
+
+void LinkedList_deleteFirst(LinkedList *linkedList) {
+	Node *aux = linkedList->first;
+
+	linkedList->first = linkedList->first->nextNode;
+
+	linkedList->length--;
+
 	free(aux);
-	return first;
 }
 
-void print(List * list) {
-
-	List * aux = list;
+void LinkedList_print(LinkedList *linkedList) {
+	Node *aux = linkedList->first;
 
 	while (aux != NULL) {
 		printf("%c", aux->bit);
-		aux = aux->next;
+
+		aux = aux->nextNode;
 	}
+
 	printf("\n");
 }

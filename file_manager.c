@@ -21,8 +21,10 @@ void compressFile(char *filePath) {
 		LOG_INFO("priting root of HuffmanTree")
 
 		printf("~ [%c:%d]\n", huffmanTree->root->character, huffmanTree->root->frequency);
-		Catch_code(huffmanTree,huffmanTree->root,NULL,0);
-		print_table(huffmanTree);
+
+		HuffmanTree_fillTable(huffmanTree);
+		HuffmanTree_printTable(huffmanTree);
+
 		// criar arquivo de saida
 	}
 

@@ -8,25 +8,31 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "frequency_queue.h"
 #include "huffman_node.h"
 #include "debug.h"
 #include "linked_list.h"
 
+#define MAX 256
 
 typedef struct huffmanTree HuffmanTree;
 
 struct huffmanTree {
 	HuffmanNode *root;
-	char * table[256];
+	char *table[MAX];
 };
-
-void Catch_code(HuffmanTree* tree, HuffmanNode * root, List * list, int size_list);
-
-void print_table(HuffmanTree* tree);
 
 HuffmanTree* HuffmanTree_createEmpty();
 
 HuffmanTree* HuffmanTree_build();
+
+int HuffmanTree_isEmpty(HuffmanTree *huffmanTree);
+
+void HuffmanTree_fillTable(HuffmanTree *huffmanTree);
+
+void HuffmanTree_catchCode(HuffmanTree *huffmanTree, HuffmanNode *root, LinkedList *linkedList);
+
+void HuffmanTree_printTable(HuffmanTree *huffmanTree);
 
 #endif /* HUFFMAN_TREE_H_ */
