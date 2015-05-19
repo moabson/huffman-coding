@@ -7,6 +7,10 @@
 
 #define MAX 256
 
+/*
+ * Cria a fila de frequencia vazia.
+ * @retorna ponteiro frequencyQueue.
+ */
 FrequencyQueue* FrequencyQueue_createEmpty() {
 	FrequencyQueue *frequencyQueue = (FrequencyQueue *) malloc(sizeof(FrequencyQueue));
 
@@ -16,6 +20,11 @@ FrequencyQueue* FrequencyQueue_createEmpty() {
 	return frequencyQueue;
 }
 
+/*
+ * Le os caracteres do arquivo e monta a fila de frequencia.
+ * @ Recebe arquivo file.
+ * @ Retorna ponteiro frequencyQueue.
+ */
 FrequencyQueue* FrequencyQueue_create(FILE *file) {
 	FrequencyQueue *frequencyQueue = FrequencyQueue_createEmpty();
 
@@ -42,6 +51,11 @@ FrequencyQueue* FrequencyQueue_create(FILE *file) {
 	return frequencyQueue;
 }
 
+/*
+ * Verifica se a fila de frequencia esta vazia.
+ * @ Recebe ponteiro fq.
+ * @ Retorna TRUE se vazia, FALSE caso contrário.
+ */
 int FrequencyQueue_isEmpty(FrequencyQueue *fq) {
 	return (fq->first == NULL);
 }
@@ -63,7 +77,11 @@ void FrequencyQueue_insert(FrequencyQueue *frequencyQueue, HuffmanNode *huffmanN
 
 	frequencyQueue->length++;
 }
-
+/*
+ * Remove o primeiro elemento da fila de frequencia e retorna-o.
+ *@ Recebe ponteiro frequencyQueue.
+ *@ Retorna ponteiro huffmanNode se frequencyQueue não está vazia, NULL caso contrário.
+ */
 HuffmanNode* FrequencyQueue_get(FrequencyQueue *frequencyQueue) {
 	if(!FrequencyQueue_isEmpty(frequencyQueue)) {
 		HuffmanNode *huffmanNode = frequencyQueue->first;
@@ -79,7 +97,10 @@ HuffmanNode* FrequencyQueue_get(FrequencyQueue *frequencyQueue) {
 		return NULL;
 	}
 }
-
+/*
+*Imprime a fila de frequencia.
+*@ Recebe ponteiro frequencyQueue.
+*/
 void FrequencyQueue_print(FrequencyQueue *frequencyQueue) {
 	if(!FrequencyQueue_isEmpty(frequencyQueue)) {
 		LOG_INFO("priting FrequencyQueue")
