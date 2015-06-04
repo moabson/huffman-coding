@@ -11,6 +11,9 @@
 #include "huffman_tree.h"
 #include "huffman_node.h"
 #include "debug.h"
+#include "bitwise_operations.h"
+
+void Write_Header(FILE * file, HuffmanTree * tree);
 
 void compressFile(char *filePath);
 

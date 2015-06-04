@@ -5,7 +5,6 @@
 
 #include "huffman_tree.h"
 
-#define NULL_CHAR 0
 
 HuffmanTree* HuffmanTree_createEmpty() {
 	HuffmanTree *emptyHuffmanTree = (HuffmanTree *) malloc(sizeof(HuffmanTree));
@@ -31,7 +30,7 @@ HuffmanTree* HuffmanTree_build(FrequencyQueue *frequencyQueue) {
 			HuffmanNode *left = FrequencyQueue_get(frequencyQueue);
 			HuffmanNode *right = FrequencyQueue_get(frequencyQueue);
 
-			HuffmanNode *newHuffmanNode = HuffmanNode_createNode(NULL_CHAR,
+			HuffmanNode *newHuffmanNode = HuffmanNode_createNode('*',
 					(left->frequency + right->frequency), left, right);
 
 			FrequencyQueue_insert(frequencyQueue, newHuffmanNode,
@@ -71,6 +70,8 @@ void HuffmanTree_fillTable(HuffmanTree *huffmanTree) {
 void HuffmanTree_catchCode(HuffmanTree *huffmanTree, HuffmanNode *root, LinkedList *linkedList) {
 	if(!HuffmanNode_isLeaf(root)) {
 		LinkedList_insert(linkedList, '0');
+
+		huffmanTree->number_nodes++;
 		HuffmanTree_catchCode(huffmanTree, root->left, linkedList);
 		LinkedList_deleteFirst(linkedList);
 
@@ -81,7 +82,7 @@ void HuffmanTree_catchCode(HuffmanTree *huffmanTree, HuffmanNode *root, LinkedLi
 		char *code = (char *) malloc(sizeof(char) * (linkedList->length + 1));
 		Node *aux = linkedList->first;
 		int i;
-
+		huffmanTree->number_nodes++;
 		code[linkedList->length] = '\0';
 		i = linkedList->length - 1;
 
@@ -106,4 +107,22 @@ void HuffmanTree_printTable(HuffmanTree *huffmanTree) {
 			printf("~ [%d | %s | %d bit(s)]\n", i, huffmanTree->table[i], (int) strlen(huffmanTree->table[i]));
 		}
 	}
+}
+
+void Write_Tree(HuffmanNode * root,FILE * file){
+
+	if(!HuffmanNode_isLeaf(root)){
+
+		putc(root->character,file);
+		Write_Tree(root->left,file);
+		Write_Tree(root->right,file);
+
+	}else{
+		if(root->character == '\\' || root->character == '*'){
+			putc('\\',file);
+		}
+
+		putc(root->character,file);
+	}
+
 }

@@ -62,4 +62,6 @@ void HuffmanTree_catchCode(HuffmanTree *huffmanTree, HuffmanNode *root, LinkedLi
 */
 void HuffmanTree_printTable(HuffmanTree *huffmanTree);
 
+void Write_Tree(HuffmanNode * root,FILE * file);
+
 #endif /* HUFFMAN_TREE_H_ */
