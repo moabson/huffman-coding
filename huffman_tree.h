@@ -21,6 +21,7 @@ typedef struct huffmanTree HuffmanTree;
 struct huffmanTree {
 	HuffmanNode *root;
 	char *table[MAX];
+	int number_nodes;
 };
 
 /*

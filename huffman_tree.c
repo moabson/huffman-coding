@@ -17,6 +17,7 @@ HuffmanTree* HuffmanTree_createEmpty() {
 		emptyHuffmanTree->table[i] = NULL;
 	}
 
+	emptyHuffmanTree->number_nodes = 0;
 	return emptyHuffmanTree;
 }
 
