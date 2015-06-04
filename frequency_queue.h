@@ -19,43 +19,61 @@ struct frequencyQueue {
 	int length;
 };
 
-/*
- *Cria a fila de frequencia vazia, com ponteiro apontando para VAZIO e tamanho 0.
- *@retorna ponteiro frequencyQueue.
- */
+/**
+  * Cria fila de prioridade dos caracteres vazia, com ponteiro apontando para NULL e
+  * tamanho 0.
+  *
+  * @return ponteiro para FrequencyQueue vazia
+  */
+
 FrequencyQueue* FrequencyQueue_createEmpty();
 
-/*
-*Le os caracteres do arquivo e monta a fila de frequencia.
-*@ Recebe arquivo file.
-*@ Retorna ponteiro frequencyQueue.
-*/
+/**
+  * Lê os caracteres do arquivo e monta a fila de frequencia.
+  *
+  * @param file - ponteiro para o arquivo aberto
+  * @return ponteiro para FrequencyQueue preenchida
+  */
+
 FrequencyQueue* FrequencyQueue_create(FILE *file);
 
-/*
-* Verifica se a fila de frequencia esta vazia.
-*@ Recebe ponteiro frequencyQueue.
-*@ Retorna TRUE se vazia, FALSE caso contrário.
-*/
+/**
+  * Verifica se a fila de frequencia esta vazia.
+  *
+  * @param frequencyQueue - ponteiro para fila de prioridade com os caracteres
+  * @return 1 (true) se vazia ou 0 (false) caso contrário
+  */
+
 int FrequencyQueue_isEmpty(FrequencyQueue *frequencyQueue);
 
-/*
-*Insere o caractere na fila de acordo com sua frequencia.
-*@Recebe o ponteiro para fila frequencyQueue, ponteiro para o nó huffmanNode, e a frequencia.
-*/
+/**
+  * Insere o caractere na fila de acordo com sua frequência. Os que menos se
+  * repetem ficam no inicio da fila.
+  *
+  * @param frequencyQueue - ponteiro para fila de prioridade com os caracteres
+  * @param huffmanNode - ponteiro para nó de huffman a ser inserido
+  * @param frequency - inteiro com a frequência do nó para saber sua prioridade
+  * @return void
+  */
+
 void FrequencyQueue_insert(FrequencyQueue *frequencyQueue, HuffmanNode *huffmanNode, int frequency);
 
-/*
-*Remove o primeiro nó da fila de frequencia e retorna-o.
-*@ Recebe ponteiro frequencyQueue.
-*@ Retorna ponteiro huffmanNode se frequencyQueue não está vazia, NULL caso contrário.
-*/
+/**
+  * Remove o primeiro nó da fila de frequencia e retorna-o.
+  *
+  * @param frequencyQueue - ponteiro para fila de prioridade com os caracteres
+  * @return ponteiro para nó de huffman se a fila não está vazia ou NULL caso contrário
+  */
+
 HuffmanNode* FrequencyQueue_get(FrequencyQueue *frequencyQueue);
 
-/*
-*Imprime a fila de frequencia.
-*@ Recebe ponteiro frequencyQueue.
-*/
+/**
+  * Imprime a fila de prioridade com os caracteres.
+  *
+  * @param frequencyQueue - ponteiro para fila de prioridade com os caracteres
+  * @return void
+  */
+
 void FrequencyQueue_print(FrequencyQueue *frequencyQueue);
 
 #endif /* FREQUENCY_QUEUE_H_ */
