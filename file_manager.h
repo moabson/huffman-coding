@@ -13,7 +13,9 @@
 #include "debug.h"
 #include "bitwise_operations.h"
 
-void Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree);
+void Write_Trash( FILE * file_comp, FILE * file2, int size_trash);
+
+int Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree);
 
 void Write_Header(FILE * file, HuffmanTree * tree);
 

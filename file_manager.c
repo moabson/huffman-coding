@@ -5,9 +5,29 @@
 
 #include "file_manager.h"
 
+void Write_Trash(FILE * file_comp, FILE * file2, int size_trash){
+
+	unsigned char character;
+	int i;
+
+	character = fgetc(file2);
+	for(i = 0; i < 3; i++){
+		if(isBitISet(size_trash, i)){
+			character = setBit(character,i + 5);
+			printf("character %d\n",character);
+		}
+
+	}
+	putc(character,file_comp);
+	printf("size trash %d\n",size_trash);
+
+
+
+}
+
 void Write_Header(FILE * file, HuffmanTree * tree){
 
-	char character = 0;
+	unsigned char character = 0;
 	int i;
 	for(i = 12; i >=0 ; i--){
 		if(i == 7){
@@ -31,9 +51,9 @@ void Write_Header(FILE * file, HuffmanTree * tree){
 	Write_Tree(tree->root,file);
 
 }
-void Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree){
-	char character;
-	char new_character = 0;
+int Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree){
+	unsigned char character;
+	unsigned char new_character = 0;
 	int i, j;
 	j = 7;
 
@@ -57,7 +77,9 @@ void Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree){
 		}
 
 	}
+	printf("lixo %d\n",7 - j);
 	putc(new_character,file_comp);
+	return (7 - j);
 }
 
 
@@ -72,6 +94,8 @@ void compressFile(char *filePath){
 		FrequencyQueue *frequencyQueue = FrequencyQueue_create(file);
 		FrequencyQueue_print(frequencyQueue);
 
+		int size_trash;
+
 		HuffmanTree *huffmanTree = HuffmanTree_build(frequencyQueue);
 
 		LOG_INFO("priting root of HuffmanTree")
@@ -81,11 +105,18 @@ void compressFile(char *filePath){
 		HuffmanTree_fillTable(huffmanTree);
 		HuffmanTree_printTable(huffmanTree);
 		printf("number of nodes %d\n",huffmanTree->number_nodes);
+
 		FILE * file_comp = fopen("teste.HUFF","w");
+		FILE * file2 = fopen("teste.HUFF","r");
+
 		Write_Header(file_comp,huffmanTree);
 		rewind(file);
-		Write_newText(file,file_comp,huffmanTree);
+		size_trash = Write_newText(file,file_comp,huffmanTree);
+		rewind(file_comp);
+
+		Write_Trash(file_comp,file2,size_trash);
 		// criar arquivo de saida
+
 	}
 
 	fclose(file);
