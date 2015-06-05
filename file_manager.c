@@ -31,8 +31,37 @@ void Write_Header(FILE * file, HuffmanTree * tree){
 	Write_Tree(tree->root,file);
 
 }
+void Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree){
+	char character;
+	char new_character = 0;
+	int i, j;
+	j = 7;
 
-void compressFile(char *filePath) {
+	while(!feof(file)){
+
+		character = fgetc(file);
+		if(feof(file))
+			break;
+
+		for(i = 0; i < strlen(tree->table[character]); i++, j--){
+			if(tree->table[character][i] == '1'){
+				new_character = setBit(new_character,j);
+
+			}
+
+			if(j == 0){
+				j = 8;
+				putc(new_character,file_comp);
+				new_character = 0;
+			}
+		}
+
+	}
+	putc(new_character,file_comp);
+}
+
+
+void compressFile(char *filePath){
 	FILE *file = fopen(filePath, "r");
 
 	if(file == NULL) {
@@ -54,7 +83,8 @@ void compressFile(char *filePath) {
 		printf("number of nodes %d\n",huffmanTree->number_nodes);
 		FILE * file_comp = fopen("teste.HUFF","w");
 		Write_Header(file_comp,huffmanTree);
-
+		rewind(file);
+		Write_newText(file,file_comp,huffmanTree);
 		// criar arquivo de saida
 	}
 

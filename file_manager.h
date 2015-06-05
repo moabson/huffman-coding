@@ -13,6 +13,8 @@
 #include "debug.h"
 #include "bitwise_operations.h"
 
+void Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree);
+
 void Write_Header(FILE * file, HuffmanTree * tree);
 
 void compressFile(char *filePath);
