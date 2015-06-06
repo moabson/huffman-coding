@@ -5,12 +5,12 @@
 
 #include "file_manager.h"
 
-void Write_Trash(FILE * file_comp, FILE * file2, int size_trash){
+void Write_Trash(FILE * filecompress1, FILE * filecompress2, int size_trash){
 
 	unsigned char character;
 	int i;
 
-	character = fgetc(file2);
+	character = fgetc(filecompress2);
 	for(i = 0; i < 3; i++){
 		if(isBitISet(size_trash, i)){
 			character = setBit(character,i + 5);
@@ -18,7 +18,7 @@ void Write_Trash(FILE * file_comp, FILE * file2, int size_trash){
 		}
 
 	}
-	putc(character,file_comp);
+	putc(character,filecompress1);
 	printf("size trash %d\n",size_trash);
 
 
@@ -48,7 +48,7 @@ void Write_Header(FILE * file, HuffmanTree * tree){
 	}
 	putc(character,file);
 
-	Write_Tree(tree->root,file);
+	HuffmanTree_writeTree(tree->root,file);
 
 }
 int Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree){
@@ -106,15 +106,15 @@ void compressFile(char *filePath){
 		HuffmanTree_printTable(huffmanTree);
 		printf("number of nodes %d\n",huffmanTree->number_nodes);
 
-		FILE * file_comp = fopen("teste.HUFF","w");
-		FILE * file2 = fopen("teste.HUFF","r");
+		FILE * filecompress1 = fopen("teste.HUFF","w");
+		FILE * filecompress2 = fopen("teste.HUFF","r");
 
-		Write_Header(file_comp,huffmanTree);
+		Write_Header(filecompress1,huffmanTree);
 		rewind(file);
-		size_trash = Write_newText(file,file_comp,huffmanTree);
-		rewind(file_comp);
+		size_trash = Write_newText(file,filecompress1,huffmanTree);
+		rewind(filecompress1);
 
-		Write_Trash(file_comp,file2,size_trash);
+		Write_Trash(filecompress1,filecompress2,size_trash);
 		// criar arquivo de saida
 
 	}
