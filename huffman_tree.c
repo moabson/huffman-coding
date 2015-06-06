@@ -109,13 +109,13 @@ void HuffmanTree_printTable(HuffmanTree *huffmanTree) {
 	}
 }
 
-void Write_Tree(HuffmanNode * root,FILE * file){
+void HuffmanTree_writeTree(HuffmanNode * root,FILE * file){
 
 	if(!HuffmanNode_isLeaf(root)){
 
 		putc(root->character,file);
-		Write_Tree(root->left,file);
-		Write_Tree(root->right,file);
+		HuffmanTree_writeTree(root->left,file);
+		HuffmanTree_writeTree(root->right,file);
 
 	}else{
 		if(root->character == '\\' || root->character == '*'){

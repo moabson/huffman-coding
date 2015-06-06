@@ -62,6 +62,13 @@ void HuffmanTree_catchCode(HuffmanTree *huffmanTree, HuffmanNode *root, LinkedLi
 */
 void HuffmanTree_printTable(HuffmanTree *huffmanTree);
 
-void Write_Tree(HuffmanNode * root,FILE * file);
+/**
+ * escreve a árvore no arquivo .HUFF, respeitando a restrição do '*' e da '\' e gravando '*' para um nó interno
+ *
+ * @param Huffmannode - nó que será gravado no arquivo
+ * @param FILE - ponteiro para um arquivo aberto no modo gravação(.HUFF)
+ * return void
+ */
+void HuffmanTree_writeTree(HuffmanNode * root,FILE * file);
 
 #endif /* HUFFMAN_TREE_H_ */
