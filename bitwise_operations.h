@@ -8,8 +8,21 @@
 #ifndef BITWISE_OPERATIONS_H_
 #define BITWISE_OPERATIONS_H_
 
+/**
+ * Muda o bite i do caracter para 1
+ *
+ * @param unsigned char - caracter cujos bits serão verificados
+ * @param int - indica a posição do bit que será modificado
+ * @return um inteiro que representa o novo caracter
+ */
 int setBit(unsigned char c, int i);
 
+/**
+ * Verifica se o bit i do inteiro passado é 1
+ *
+ * @param int - inteiro cujos bits serão verificados
+ * @param int - posição do bit que será verificado
+ */
 int isBitISet(int c, int i);
 
 
