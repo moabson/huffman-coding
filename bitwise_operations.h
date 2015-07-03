@@ -15,7 +15,7 @@
  * @param int - indica a posição do bit que será modificado
  * @return um inteiro que representa o novo caracter
  */
-int setBit(unsigned char c, int i);
+int setBit(int c, int i);
 
 /**
  * Verifica se o bit i do inteiro passado é 1

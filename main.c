@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
 		compressFile(filePath);
 	} else if(decompress) {
 		printf("Descomprimir arquivo %s\n", filePath);
+		decompressFile(filePath);
 	} else {
 		// usage
 	}

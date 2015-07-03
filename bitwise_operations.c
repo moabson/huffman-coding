@@ -7,9 +7,9 @@
 
 #include "bitwise_operations.h"
 
-int setBit(unsigned char c, int i){
+int setBit(int c, int i){
 
-	unsigned char mask = 1 << i;
+	int mask = 1 << i;
 	return mask | c;
 }
 int isBitISet(int c, int i){
