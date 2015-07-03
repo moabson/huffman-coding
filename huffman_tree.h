@@ -70,5 +70,6 @@ void HuffmanTree_printTable(HuffmanTree *huffmanTree);
  * return void
  */
 void HuffmanTree_writeTree(HuffmanNode * root,FILE * file);
+void HuffmanTree_rebuilding(FILE * file, HuffmanNode * current, HuffmanTree * tree);
 
 #endif /* HUFFMAN_TREE_H_ */

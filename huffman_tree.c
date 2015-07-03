@@ -5,6 +5,52 @@
 
 #include "huffman_tree.h"
 
+void HuffmanTree_rebuilding(FILE * file, HuffmanNode * current, HuffmanTree * tree){
+	if(tree->number_nodes > 0){
+		unsigned char character = fgetc(file);
+		HuffmanNode * nodeleft = HuffmanNode_createEmpty();
+		HuffmanNode * noderight = HuffmanNode_createEmpty();
+		if(character == '*'){
+
+			if(current->left == NULL){
+				nodeleft->character = character;
+				current->left = nodeleft;
+				tree->number_nodes--;
+				HuffmanTree_rebuilding(file, current->left,tree);
+				HuffmanTree_rebuilding(file, current,tree);
+			}else if(current->right == NULL){
+				noderight->character = character;
+				current->right = noderight;
+				tree->number_nodes--;
+				HuffmanTree_rebuilding(file, current->right,tree);
+			}
+
+		}else{
+			if(current->left == NULL){
+				HuffmanNode * nodeleft = HuffmanNode_createEmpty();
+				nodeleft->character = character;
+				current->left = nodeleft;
+				tree->number_nodes--;
+				if(character == '\\'){
+					character = fgetc(file);
+					nodeleft->character = character;
+				}
+				HuffmanTree_rebuilding(file, current,tree);
+
+			}else if(current->right == NULL){
+				noderight->character = character;
+				current->right = noderight;
+				tree->number_nodes--;
+				if(character == '\\'){
+				character = fgetc(file);
+				nodeleft->character = character;
+				}
+			}
+
+		}
+
+	}
+}
 
 HuffmanTree* HuffmanTree_createEmpty() {
 	HuffmanTree *emptyHuffmanTree = (HuffmanTree *) malloc(sizeof(HuffmanTree));
@@ -104,7 +150,7 @@ void HuffmanTree_printTable(HuffmanTree *huffmanTree) {
 
 	for(i = 0; i < MAX; i++) {
 		if(huffmanTree->table[i] != NULL) {
-			printf("~ [%d | %s | %d bit(s)]\n", i, huffmanTree->table[i], (int) strlen(huffmanTree->table[i]));
+			printf("~ [%c | %s | %d bit(s)]\n", i, huffmanTree->table[i], (int) strlen(huffmanTree->table[i]));
 		}
 	}
 }
