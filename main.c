@@ -21,10 +21,10 @@ int main(int argc, char *argv[]) {
 	}
 
 	if(compress) {
-		compressFile(filePath);
+		FileManager_compressFile(filePath);
 	} else if(decompress) {
 		printf("Descomprimir arquivo %s\n", filePath);
-		decompressFile(filePath);
+		FileManager_decompressFile(filePath);
 	} else {
 		// usage
 	}

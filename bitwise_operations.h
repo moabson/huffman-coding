@@ -15,7 +15,7 @@
  * @param int - indica a posição do bit que será modificado
  * @return um inteiro que representa o novo caracter
  */
-int setBit(int c, int i);
+int BitwiseOperations_setBit(int c, int i);
 
 /**
  * Verifica se o bit i do inteiro passado é 1
@@ -23,7 +23,7 @@ int setBit(int c, int i);
  * @param int - inteiro cujos bits serão verificados
  * @param int - posição do bit que será verificado
  */
-int isBitISet(int c, int i);
+int BitwiseOperations_isBitISet(int c, int i);
 
 
 #endif /* BITWISE_OPERATIONS_H_ */

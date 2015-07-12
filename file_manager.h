@@ -23,7 +23,7 @@
  * @return void
  */
 
-void Write_Trash( FILE * filecompress1, FILE * filecompress2, int size_trash);
+void FileManager_writeTrash( FILE * filecompress1, FILE * filecompress2, int size_trash);
 
 /**
  * Grava o texto comprimido no arquivo .HUFF
@@ -33,7 +33,7 @@ void Write_Trash( FILE * filecompress1, FILE * filecompress2, int size_trash);
  * @param HuffmanTree - ponteiro para a árvore de huffman que contém todas as novas codificações dos caracteres
  * @return int - a quantidade de lixo do último byte gravado no arquivo comprimido
  */
-int Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree);
+int FileManager_writeNewText(FILE * file, FILE * file_comp, HuffmanTree * tree);
 
 /**
  * Grava o cabeçalho do arquivo compactado, contendo dois bytes representando a quantidade de lixo do último byte e a quatidade de nós da árvore em seguida a árvore gravada em pré-ordem
@@ -42,7 +42,7 @@ int Write_newText(FILE * file, FILE * file_comp, HuffmanTree * tree);
  *@param HuffmanTree - ponteiro para a árvore de huffman que será gravada no arquivo compactado e também será usada para gravar a quantidade de nós
  *@return void
  */
-void Write_Header(FILE * file, HuffmanTree * tree);
+void FileManager_writeHeader(FILE * file, HuffmanTree * tree);
 
 /**
  * Comprimi o arquivo
@@ -50,28 +50,28 @@ void Write_Header(FILE * file, HuffmanTree * tree);
  * @param char - caminho para o arquivo que será comprimido
  * @return void
  */
-void compressFile(char *filePath);
+void FileManager_compressFile(char *filePath);
 /*
  * Descommprimi o arquivo
  *
  * @param char - caminho para o arquivo que será descomprimido
  * @return void
  */
-void decompressFile(char *filePath);
+void FileManager_decompressFile(char *filePath);
 /*
  * Pega o tamanho do lixo nos três primeiros bites do primeiro byte do arquivo
  *
  * @param FILE - ponteiro para o arquivo que será descomprimido, aberto no modo leitura
  * @return int - o tamanho do lixo
  */
-int Get_Trash(FILE * file);
+int FileManager_getTrash(FILE * file);
 /*
  * Pega no cabeçalho do arquivo a quantidade de nós da árvore, sendo que essa quantidade está grada nos cinco ultimos bites do primeiro byte e nos oito bites do segundo byte
  *
  * @param  FILE - ponteiro para o arquivo que será descomprimido, aberto no modo leitura
  * @return int - quantidade de lixo
  */
-int Number_nodes(FILE *file);
+int FileManager_numberNodes(FILE *file);
 /*
  * decodifica os cararacteres do arquivo através do caminhamento na árvore de huffman, e grava os caracteres decodificados no arquivo descomprimido lendo somente até antes do lixo contido no último byte do arquivo
  *
@@ -81,6 +81,6 @@ int Number_nodes(FILE *file);
  * @param int - quantidade de lixo contido no último byte do arquivo
  * @return void
  */
-void Decode(FILE *file, HuffmanTree * tree,FILE * decompress, int size_trash);
+void FileManager_decode(FILE *file, HuffmanTree * tree,FILE * decompress, int size_trash);
 
 #endif /* FILE_MANAGER_H_ */
