@@ -43,7 +43,7 @@ void HuffmanTree_rebuilding(FILE * file, HuffmanNode * current, HuffmanTree * tr
 				tree->number_nodes--;
 				if(character == '\\'){
 				character = fgetc(file);
-				nodeleft->character = character;
+				noderight->character = character;
 				}
 			}
 
