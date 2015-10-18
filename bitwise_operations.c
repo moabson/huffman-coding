@@ -7,12 +7,12 @@
 
 #include "bitwise_operations.h"
 
-int BitwiseOperations_setBit(int c, int i){
+int BitwiseOperations_setBit(int character, int position){
 
-	int mask = 1 << i;
-	return mask | c;
+	int mask = 1 << position;
+	return mask | character;
 }
-int BitwiseOperations_isBitISet(int c, int i){
-    int mask = 1 << i;
-    return mask & c;
+int BitwiseOperations_isBitISet(int character, int position){
+    int mask = 1 << position;
+    return mask & character;
 }

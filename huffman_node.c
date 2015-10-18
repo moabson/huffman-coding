@@ -17,7 +17,7 @@ HuffmanNode* HuffmanNode_createEmpty() {
 	return emptyHuffmanNode;
 }
 
-HuffmanNode* HuffmanNode_createNode(char character, int frequency, HuffmanNode *left, HuffmanNode *right) {
+HuffmanNode* HuffmanNode_createNode(unsigned char character, int frequency, HuffmanNode *left, HuffmanNode *right) {
 	HuffmanNode *huffmanNode = HuffmanNode_createEmpty();
 
 	huffmanNode->character = character;
@@ -28,7 +28,7 @@ HuffmanNode* HuffmanNode_createNode(char character, int frequency, HuffmanNode *
 	return huffmanNode;
 }
 
-HuffmanNode* HuffmanNode_createLeaf(char character, int frequency) {
+HuffmanNode* HuffmanNode_createLeaf(unsigned char character, int frequency) {
 	HuffmanNode *leafHuffmanNode = HuffmanNode_createEmpty();
 
 	leafHuffmanNode->character = character;

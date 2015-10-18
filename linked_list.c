@@ -14,7 +14,7 @@ LinkedList* LinkedList_createEmpty() {
 	return linkedList;
 }
 
-void LinkedList_insert(LinkedList *linkedList, char bit) {
+void LinkedList_insert(LinkedList *linkedList,unsigned char bit) {
 	Node *newNode = (Node *) malloc(sizeof(Node));
 
 	newNode->bit = bit;

@@ -20,30 +20,40 @@ struct huffmanNode {
 	struct huffmanNode *right;
 };
 
-/*
-*Cria o nó de huffman vazio.
-*@Retona o ponteiro do nó emptyHuffmanNode.
+/**
+* Cria um nó vazio para ser utilizado em HuffmanNode_createNode e HuffmanNode_createLeaf.
+*
+* @return ponteiro para nó vazio.
+*
 */
 HuffmanNode* HuffmanNode_createEmpty();
 
-/*
-*Cria o nó de huffman com os dados recebidos.
-*@Recebe o caracter character, o inteiro frequency, o ponteiro para o nó left e o ponteiro para o nó right.
-*@Retorna o ponteiro para o nó huffmanNode.
+/**
+* Cria um nó.
+*
+* @param character - caractere do nó.
+* @param frequency - frequência com que o caractere aparece.
+* @return ponteiro para novo nó.
+*
 */
-HuffmanNode* HuffmanNode_createNode(char character, int frequency, HuffmanNode *left, HuffmanNode *right);
+HuffmanNode* HuffmanNode_createNode(unsigned char character, int frequency, HuffmanNode *left, HuffmanNode *right);
 
-/*
-*Cria um nó que representa uma folha da arvore de Huffman com os valores dados.
-*@Recebe o caracter character e o inteiro frequency.
-*@Retorna o ponteiro para o nó leafHuffmanNode.
+/**
+* Cria um nó folha.
+*
+* @param character - caractere do nó.
+* @param frequency - frequência com que o caractere aparece.
+* @return ponteiro para novo nó folha.
+*
 */
-HuffmanNode* HuffmanNode_createLeaf(char character, int frequency);
+HuffmanNode* HuffmanNode_createLeaf(unsigned char character, int frequency);
 
-/*
-*Verifica se o nó recebido é uma folha.
-*@Recebe o ponteiro ponteiro para o nó huffmanNode.
-*@Retorna TRUE se for uma folha e FALSE caso contrário.
+/**
+* Verifica se determinado nó é um nó folha.
+*
+* @param huffmanNode - ponteiro para nó a ser verificado.
+* @return 1 (true) se vazia ou 0 (false) caso contrário.
+*
 */
 int HuffmanNode_isLeaf(HuffmanNode *huffmanNode);
 

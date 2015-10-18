@@ -24,27 +24,38 @@ struct linkedList {
 	int length;
 };
 
-/*
-*Cria lista encadeada vazia, com ponteiro avontando para VAZIO e tamanho 0.
-*@Retorna ponteiro linkedList.
+/**
+* Cria uma lista encadeada vazia.
+*
+* @return ponteiro para LinkedList.
+*
 */
 LinkedList* LinkedList_createEmpty();
 
-/*
-*Insere um nó na lista encadeada.
-*@Recebe ponteiro linkedList e caractere bit.
+/**
+* Insere um nó no final da lista.
+*
+* @param linkedList - ponteiro para lista.
+* @param bit - caractere que representa um bit.
+* @return void
 */
-void LinkedList_insert(LinkedList *linkedList, char bit);
+void LinkedList_insert(LinkedList *linkedList, unsigned char bit);
 
-/*
-*Deleta o primeiro nó da lista encadeada.
-*@Recebe ponteiro linkedList.
+/**
+* Apaga o primeiro nó da lista.
+*
+* @param linkedList - ponteiro para lista.
+* @return void
+*
 */
 void LinkedList_deleteFirst(LinkedList *linkedList);
 
-/*
-*Imprime a lista encadeada.
-*@Recebe ponteiro linkedList.
+/**
+* Imprime a lista.
+*
+* @param linkedList - ponteiro para lista.
+* @return void
+*
 */
 void LinkedList_print(LinkedList *linkedList);
 

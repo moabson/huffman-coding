@@ -9,21 +9,24 @@
 #define BITWISE_OPERATIONS_H_
 
 /**
- * Muda o bite i do caracter para 1
+ * Muda o bit i do caractere para 1.
  *
- * @param unsigned char - caracter cujos bits serão verificados
- * @param int - indica a posição do bit que será modificado
- * @return um inteiro que representa o novo caracter
+ * @param character - caractere cujo os bits serão verificados.
+ * @param position - indica a posição do bit que será modificado.
+ * @return um inteiro que representa um novo character.
+ *
  */
-int BitwiseOperations_setBit(int c, int i);
+int BitwiseOperations_setBit(int character, int position);
 
 /**
- * Verifica se o bit i do inteiro passado é 1
+ * Verifica se o bit i do inteiro passado é 1.
  *
- * @param int - inteiro cujos bits serão verificados
- * @param int - posição do bit que será verificado
+ * @param character - caractere cujo o bit será verificados.
+ * @param position - indica a posição do caractere no qual o bit será verificado.
+ * @return retorna 0 (false) se o bit não estiver setado ou um número maior que 0 caso contrário.
+ *
  */
-int BitwiseOperations_isBitISet(int c, int i);
+int BitwiseOperations_isBitISet(int character, int position);
 
 
 #endif /* BITWISE_OPERATIONS_H_ */
