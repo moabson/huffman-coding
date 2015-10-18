@@ -72,7 +72,11 @@ int FileManager_getTrash(FILE * file){
 	unsigned char character = fgetc(file);
 	unsigned char size_trash = 0;
 	int i,j;
+
 	j = 2;
+
+	// i controla a posição no primeiro byte
+	// j controla a posição no sizeTrash
 
 	for(i = 7; i > 4; i--){
 		if(BitwiseOperations_isBitISet(character, i)){
@@ -86,118 +90,147 @@ int FileManager_getTrash(FILE * file){
 }
 int FileManager_numberNodes(FILE *file){
 	unsigned char character = fgetc(file);
-	int nodes = 0;
+	int numberOfNodes = 0;
 	int i;
+
+	// percorre o primeiro byte
+	// i começa de 4 pulando os 3 bits do lixo
 
 	for(i = 4; i > -1; i--){
 		if(BitwiseOperations_isBitISet(character, i)){
-			nodes = BitwiseOperations_setBit(nodes,i + 8);
+			numberOfNodes = BitwiseOperations_setBit(numberOfNodes,i + 8);
 		}
 	}
+
+	// percorre o segundo byte
+	// i começa de 7 indicando o primeiro bit do byte
 
 	character = fgetc(file);
 
 	for(i = 7; i > -1; i--){
 		if(BitwiseOperations_isBitISet(character, i)){
-			nodes = BitwiseOperations_setBit(nodes,i);
+			numberOfNodes = BitwiseOperations_setBit(numberOfNodes,i);
 		}
 	}
-	printf("number of nodes |%d|\n",nodes);
-	return nodes;
+	printf("number of nodes |%d|\n",numberOfNodes);
+	return numberOfNodes;
 }
 
-void FileManager_writeTrash(FILE * filecompress1, FILE * filecompress2, int size_trash){
+void FileManager_writeTrash(FILE * fileOutRead, FILE * fileOutWriter, int sizeTrash){
 
 	unsigned char character;
 	int i;
 
-	character = fgetc(filecompress2);
+	character = fgetc(fileOutWriter);
+
+	// grava o lixo nos 3 primeiros bits
+	// pos: i + 5
+	//   7   6   5
+	// | 0 | 0 | 0 | ...
 	for(i = 0; i < 3; i++){
-		if(BitwiseOperations_isBitISet(size_trash, i)){
+		if(BitwiseOperations_isBitISet(sizeTrash, i)){
 			character = BitwiseOperations_setBit(character,i + 5);
 		}
 
 	}
-	putc(character,filecompress1);
+
+	// grava o primeiro byte com os 3 primeiros bits modificados, com o tamanho do lixo
+	putc(character,fileOutRead);
 
 
 
 }
 
-void FileManager_writeHeader(FILE * file, HuffmanTree * tree){
+void FileManager_writeHeader(FILE * fileOutWriter, HuffmanTree * huffmanTree){
 
-	unsigned char character = 0;
+	unsigned char mask = 0;
 	int i;
+
+	// 2 bytes = 16 bits
+	// 3 bits primeiros para o lixo
+	// 13 bits restantes para a quantidade de Nós
 	for(i = 12; i >=0 ; i--){
+		// transição para o segundo byte
+		// grava o primeiro byte no arquivo e inicia o segundo
 		if(i == 7){
-			putc(character,file);
-			character = 0;
+			putc(mask,fileOutWriter);
+			mask = 0;
 		}
-		if(BitwiseOperations_isBitISet(tree->number_nodes,i))
-		{
+		// verifica se o bit na posição i está setado
+		if(BitwiseOperations_isBitISet(huffmanTree->number_nodes,i)){
+			// primeiro byte
+			// se i estiver no intervalo [8, 12], então estamos no primeiro byte
 			if(i > 7 && i < 13){
-				character = BitwiseOperations_setBit(character,i - 8);
+				mask = BitwiseOperations_setBit(mask,i - 8);
 			}
+			// segundo byte
 			else{
-				character = BitwiseOperations_setBit(character,i);
+				mask = BitwiseOperations_setBit(mask,i);
 			}
 
 		}
 
 	}
-	putc(character,file);
 
-	HuffmanTree_writeTree(tree->root,file);
+	// grava o segundo byte
+	putc(mask,fileOutWriter);
+
+	HuffmanTree_writeTree(huffmanTree->root,fileOutWriter);
 
 }
-int FileManager_writeNewText(FILE * file, FILE * file_comp, HuffmanTree * tree){
+int FileManager_writeNewText(FILE * originalFileRead, FILE * fileOutWriter, HuffmanTree * huffmanTree){
 	unsigned char character;
-	unsigned char new_character = 0;
-	int i, j;
+	unsigned char mask = 0;
+	int i, j,sizeTrash = 0;
+
+	// j indica o indice do bit
 	j = 7;
 
-	while(!feof(file)){
+	while(!feof(originalFileRead)){
 
-		character = fgetc(file);
-		if(feof(file)){
-			if(j == 7)
+		character = fgetc(originalFileRead);
+		if(feof(originalFileRead)){
+			// se j == 7, então não sobrou bits
+			if(j == 7){
 				j = 0;
+			}
+			// caso contrario grava a quantidade de bits que sobrou (lixo)
 			else{
-				putc(new_character,file_comp);
+				putc(mask,fileOutWriter);
 				j++;
 			}
 			break;
 		}
-		for(i = 0; i < strlen(tree->table[character]); i++, j--){
-			if(tree->table[character][i] == '1'){
-				new_character = BitwiseOperations_setBit(new_character,j);
+		for(i = 0; i < strlen(huffmanTree->table[character]); i++, j--){
+			if(huffmanTree->table[character][i] == '1'){
+				mask = BitwiseOperations_setBit(mask,j);
 			}
-
+			// quando j chegar a 0, o byte foi setado, então grava-o
+			// no arquivo e reinicia o j e mask
 			if(j == 0){
 				j = 8;
-				putc(new_character,file_comp);
-				new_character = 0;
+				putc(mask,fileOutWriter);
+				mask = 0;
 			}
 		}
 
 	}
-
-	return (j);
+	sizeTrash = j;
+	return sizeTrash;
 }
 
 
-void FileManager_compressFile(char *filePath){
-	FILE *file = fopen(filePath, "r");
+void FileManager_compressFile(char *fileName){
+	FILE *file = fopen(fileName, "r");
+	int size_trash;
 
 	if(file == NULL) {
 		LOG_ERR_PTR("failed on opening file");
 	} else {
-		LOG_INFO("open ", "%s file successfully", filePath);
+		LOG_INFO("open ", "%s file successfully", fileName);
 
 		FrequencyQueue *frequencyQueue = FrequencyQueue_create(file);
 		FrequencyQueue_print(frequencyQueue);
-
-		int size_trash;
 
 		HuffmanTree *huffmanTree = HuffmanTree_build(frequencyQueue);
 
@@ -208,62 +241,77 @@ void FileManager_compressFile(char *filePath){
 		HuffmanTree_fillTable(huffmanTree);
 		HuffmanTree_printTable(huffmanTree);
 
-		strcat(filePath,".huff");
-		FILE * filecompress1 = fopen(filePath,"w");
-		FILE * filecompress2 = fopen(filePath,"r");
+		strcat(fileName,".huff");
+		FILE * fileOutWriter = fopen(fileName,"w");
+		FILE * fileOutRead = fopen(fileName,"r");
 
-		FileManager_writeHeader(filecompress1,huffmanTree);
+		FileManager_writeHeader(fileOutWriter,huffmanTree);
 		LOG_INFO("Header recorded with success");
 		rewind(file);
-		size_trash = FileManager_writeNewText(file,filecompress1,huffmanTree);
+		size_trash = FileManager_writeNewText(file,fileOutWriter,huffmanTree);
 		LOG_INFO("compressed text");
-		rewind(filecompress1);
+		rewind(fileOutWriter);
 
-		FileManager_writeTrash(filecompress1,filecompress2,size_trash);
+		FileManager_writeTrash(fileOutWriter,fileOutRead,size_trash);
 		LOG_INFO("Trash recorded with success");
 		LOG_INFO("File compressed with success");
 		// criar arquivo de saida
+
+		fseek (file, 0, SEEK_END);
+		fseek (fileOutRead, 0, SEEK_END);
+		printf("Original file size = %ld\n",ftell(file));
+		printf("Compressed file size = %ld\n",ftell(fileOutRead));
+		printf("The compression rate = %lf%\n",(double)((ftell(file) - ftell(fileOutRead))*100)/ftell(file));
+
 
 	}
 
 	fclose(file);
 }
-void FileManager_decompressFile(char *filePath){
-	FILE *file = fopen(filePath, "r");
-	HuffmanTree * tree = HuffmanTree_createEmpty();
+void FileManager_decompressFile(char *fileName){
+	FILE *fileCompressed = fopen(fileName, "r");
+	HuffmanTree * huffmanTree = HuffmanTree_createEmpty();
 	HuffmanNode * root = HuffmanNode_createEmpty();
-	int size_trash;
-	int nodes;
-		if(file == NULL) {
+	int sizeTrash, numberOfNodes;
+
+		if(fileCompressed == NULL) {
 			LOG_ERR_PTR("failed on opening file");
 		} else {
-			LOG_INFO("open ", "%s file successfully", filePath);
-			size_trash = FileManager_getTrash(file);
-			printf("size trash %d\n",size_trash);
-			rewind(file);
-			nodes = FileManager_numberNodes(file);
-			printf("%d\n",nodes);
-			if(nodes == 1){
-				root->character = fgetc(file);
-				tree->root = root;
-			}else{
-				root->character = fgetc(file);
-				tree->root = root;
-				tree->number_nodes = nodes - 1;
-				HuffmanTree_rebuilding(file, tree->root, tree);
-				LOG_INFO("Tree of Huffman rebuilt");
-				HuffmanTree_fillTable(tree);
-				HuffmanTree_printTable(tree);
-				filePath[strlen(filePath) - 5] = '\0';
-				FILE *decompress = fopen(filePath,"w");
-				FileManager_decode(file,tree,decompress,size_trash);
-				LOG_INFO("Uncompressed file");
-				fseek (file, 0, SEEK_END);
-				fseek (decompress, 0, SEEK_END);
-				printf("Compressed file size = %ld\n",ftell(file));
-				printf("Umcompressed file size = %ld\n",ftell(decompress));
-				printf("The compression rate = %lf%\n",(double)((ftell(decompress) - ftell(file))*100)/ftell(decompress));
+			LOG_INFO("open ", "%s file successfully", fileName);
 
+			sizeTrash = FileManager_getTrash(fileCompressed);
+
+			printf("size trash %d\n",sizeTrash);
+
+			rewind(fileCompressed);
+
+			numberOfNodes = FileManager_numberNodes(fileCompressed);
+
+			printf("%d\n",numberOfNodes);
+
+			if(numberOfNodes == 1){
+				root->character = fgetc(fileCompressed);
+				huffmanTree->root = root;
+			}else{
+				root->character = fgetc(fileCompressed);
+
+				huffmanTree->root = root;
+				huffmanTree->number_nodes = numberOfNodes - 1;
+
+				HuffmanTree_rebuilding(fileCompressed, huffmanTree->root, huffmanTree);
+
+				LOG_INFO("Tree of Huffman rebuilt");
+
+				HuffmanTree_fillTable(huffmanTree);
+				HuffmanTree_printTable(huffmanTree);
+
+				fileName[strlen(fileName) - 5] = '\0';
+
+				FILE *decompress = fopen(fileName,"w");
+
+				FileManager_decode(fileCompressed,huffmanTree,decompress,sizeTrash);
+
+				LOG_INFO("Uncompressed file");
 			}
 
 		}
