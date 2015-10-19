@@ -8,10 +8,10 @@
 #include "bitwise_operations.h"
 
 int BitwiseOperations_setBit(int character, int position){
-
 	int mask = 1 << position;
 	return mask | character;
 }
+
 int BitwiseOperations_isBitISet(int character, int position){
     int mask = 1 << position;
     return mask & character;

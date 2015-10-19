@@ -7,7 +7,6 @@
 
 #define MAX 256
 
-
 FrequencyQueue* FrequencyQueue_createEmpty() {
 	FrequencyQueue *frequencyQueue = (FrequencyQueue *) malloc(sizeof(FrequencyQueue));
 

@@ -13,7 +13,6 @@
 #include "debug.h"
 #include "bitwise_operations.h"
 
-
 /**
  * Grava nos três primeiros bits do primeiro byte do cabeçalho do arquivo de saida o tamanho do lixo
  *
@@ -52,6 +51,7 @@ void FileManager_writeHeader(FILE *fileOutWriter, HuffmanTree *huffmanTree);
  * @return void
  */
 void FileManager_compressFile(char *fileName);
+
 /*
  * Descomprime o arquivo
  *
@@ -59,13 +59,15 @@ void FileManager_compressFile(char *fileName);
  * @return void
  */
 void FileManager_decompressFile(char *fileName);
+
 /*
  * Pega o tamanho do lixo nos três primeiros bites do primeiro byte do arquivo
  *
  * @param file - ponteiro para o arquivo que será descomprimido, aberto no modo leitura
  * @return int - o tamanho do lixo
  */
-int FileManager_getTrash(FILE * file);
+int FileManager_getTrash(FILE *file);
+
 /*
  * Pega no cabeçalho do arquivo a quantidade de nós da árvore, sendo que essa quantidade está grada nos cinco ultimos bites do primeiro byte e nos oito bites do segundo byte
  *
@@ -73,6 +75,7 @@ int FileManager_getTrash(FILE * file);
  * @return int - quantidade de lixo
  */
 int FileManager_numberNodes(FILE *file);
+
 /*
  * decodifica os cararacteres do arquivo através do caminhamento na árvore de huffman, e grava os caracteres decodificados no arquivo descomprimido lendo somente até antes do lixo contido no último byte do arquivo
  *
@@ -83,4 +86,5 @@ int FileManager_numberNodes(FILE *file);
  * @return void
  */
 void FileManager_decode(FILE *fileCompressedRead, HuffmanTree *huffmanTree, FILE *originalFileWriter, int sizeTrash);
+
 #endif /* FILE_MANAGER_H_ */
